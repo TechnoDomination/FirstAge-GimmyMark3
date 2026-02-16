@@ -31,13 +31,13 @@ public class Shooter {
 
     public Shooter(HardwareMap hardwareMap) {
         ShooterMotorLeft = hardwareMap.get(DcMotorEx.class, "ShooterMotorLeft");
-        //ShooterMotorRight = hardwareMap.get(DcMotorEx.class, "ShooterMotorRight");
+        ShooterMotorRight = hardwareMap.get(DcMotorEx.class, "ShooterMotorRight");
         ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //ShooterMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ShooterMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ShooterMotorLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        //ShooterMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        ShooterMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
         ShooterMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ShooterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ShooterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ShooterMotorLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
         instance = this;
     }
@@ -80,13 +80,13 @@ public class Shooter {
         this.targetRPM = targetRPM;
         targetVelocityTPS = (targetRPM / 60) * 28;
         ShooterMotorLeft.setVelocity(targetVelocityTPS+offset);
-        //ShooterMotorRight.setVelocity(targetVelocityTPS);
+        ShooterMotorRight.setVelocity(targetVelocityTPS);
     }
 
     public void stopMotor() {
         ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ShooterMotorLeft.setPower(0.0);
-        //ShooterMotorRight.setPower(0.0);
+        ShooterMotorRight.setPower(0.0);
     }
 
     public void setPower() {
