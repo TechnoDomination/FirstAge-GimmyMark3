@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.LimelightHelper;
 
@@ -64,8 +65,16 @@ public class Turret {
                 dTerm = ((error - latestError) / time) * kD;
             }
 
+            if (Math.abs(error) < toleranceForAngle) {
+                power = 0;
+            } else {
+                power = Range.clip(pTerm + dTerm, -MAX_POWER, MAX_POWER);
+            }
+
+            Turret.setPower(power);
+            latestError = error;
+
         }
     }
-
 
     }
