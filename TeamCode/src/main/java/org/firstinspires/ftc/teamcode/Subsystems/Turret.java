@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Util.PIDFController;
+import org.firstinspires.ftc.teamcode.Util.PIDFParams;
+
 import org.firstinspires.ftc.teamcode.LimelightHelper;
 
 import java.util.List;
@@ -24,15 +27,25 @@ public class Turret {
     private double toleranceForAngle = 0.5;
     private final double MAX_POWER = 0.7;
     private double power = 0.0;
+    private double turretStraightPos = 0;
 
     private final ElapsedTime timer = new ElapsedTime();
 
+    public PIDFController controller = new PIDFController(new PIDFParams(0.0075,0.0,0.0001,0.0));
+
+    public boolean isTargetReached = false;
+
+    public enum State {
+        FACINGFORWARD
+    }
 
 
     public Turret(HardwareMap hardwareMap) {
 
         Turret = hardwareMap.get(DcMotorEx.class, "Turret");
-        Turret.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        Turret.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        Turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         instance = this;
     }

@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
@@ -34,6 +36,9 @@ public class TeleOpDrive extends LinearOpMode {
 
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            shooter.update();
+            intake.update();
+            shooterHood.update();
 
             //Intake
             if (gamepad1.dpad_up) {
@@ -55,7 +60,7 @@ public class TeleOpDrive extends LinearOpMode {
                 shooterHood.state = ShooterHood.State.CLOSE;
             }
             if (gamepad1.a) {
-                shooter.state = Shooter.State.REST;
+                shooter.stopMotor();
                 shooterHood.state = ShooterHood.State.REST;
             }
             if (gamepad1.x) {
@@ -67,6 +72,13 @@ public class TeleOpDrive extends LinearOpMode {
                 shooterHood.state = ShooterHood.State.MIDDLE;
             }
 
+            telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
+            telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
+            telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
+            telemetry.addData("Right PIDFCoeff : ", shooter.ShooterMotorRight.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
+            telemetry.addData("State Shooter:" , shooter.state);
+            telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
+            telemetry.update();
         }
     }
 }

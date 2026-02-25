@@ -33,12 +33,13 @@ public class Shooter {
         ShooterMotorLeft = hardwareMap.get(DcMotorEx.class, "ShooterMotorLeft");
         ShooterMotorRight = hardwareMap.get(DcMotorEx.class, "ShooterMotorRight");
         ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ShooterMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ShooterMotorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ShooterMotorLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         ShooterMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
         ShooterMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ShooterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ShooterMotorLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
+        ShooterMotorRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
         instance = this;
     }
 
@@ -80,17 +81,19 @@ public class Shooter {
         this.targetRPM = targetRPM;
         targetVelocityTPS = (targetRPM / 60) * 28;
         ShooterMotorLeft.setVelocity(targetVelocityTPS+offset);
-        ShooterMotorRight.setVelocity(targetVelocityTPS);
+        ShooterMotorRight.setVelocity(targetVelocityTPS+offset);
     }
 
     public void stopMotor() {
         ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ShooterMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ShooterMotorLeft.setPower(0.0);
         ShooterMotorRight.setPower(0.0);
     }
 
     public void setPower() {
-        ShooterMotorLeft.setPower(1.0);
+        ShooterMotorLeft.setPower(0.25);
+        ShooterMotorRight.setPower(0.25);
     }
 
     public enum State {
@@ -122,7 +125,7 @@ public class Shooter {
                 setVelocityRPM(3000);
                 break;
             case CLOSE:
-                setVelocityRPM(3100);
+                setVelocityRPM(2550);
                 break;
             case TOOCLOSE:
                 setVelocityRPM(2800);
@@ -134,10 +137,10 @@ public class Shooter {
                 setVelocityRPM(3200);
                 break;
             case MIDDLE:
-                setVelocityRPM(3500);
+                setVelocityRPM(3100);
                 break;
             case FAR:
-                setVelocityRPM(5000);
+                setVelocityRPM(4300);
                 break;
             case AUTOFARRED:
                 setVelocityRPM(5000);
@@ -190,8 +193,10 @@ public class Shooter {
             telemetry = telemetry + "\n Shooter Target Velocity = " + targetVelocityTPS;
             telemetry = telemetry + "\n Shooter Target Motor RPM = " + targetRPM;
             telemetry = telemetry + "\n LL calculated RPMdistance = " + setRPMdistance;
-            telemetry = telemetry + "\n Shooter Actual Velocity = " + ShooterMotorLeft.getVelocity();
-            telemetry = telemetry + "\n Shooter Actual Motor RPM = " + ((ShooterMotorLeft.getVelocity()/28) * 60);
+            telemetry = telemetry + "\n Shooter Left Actual Velocity = " + ShooterMotorLeft.getVelocity();
+            telemetry = telemetry + "\n Shooter Right Actual Velocity = " + ShooterMotorRight.getVelocity();
+            telemetry = telemetry + "\n Shooter Actual Motor Left RPM = " + ((ShooterMotorLeft.getVelocity()/28) * 60);
+            telemetry = telemetry + "\n Shooter Actual Motor Right RPM = " + ((ShooterMotorRight.getVelocity()/28) * 60);
             telemetry = telemetry + "\n Shooter State = " + state;
             telemetry = telemetry + "\n ";
             return telemetry;
