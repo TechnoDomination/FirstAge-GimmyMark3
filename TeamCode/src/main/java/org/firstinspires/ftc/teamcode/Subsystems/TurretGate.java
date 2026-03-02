@@ -9,8 +9,8 @@ public class TurretGate {
     public State state = State.REST;
     public static TurretGate instance;
     private final double rest = 0.0;
-    private final double close = 0.0;
-    private final double open = 1;
+    private final double open = 0.0;
+    private final double close = 1;
 
     public enum State {
         OPEN,
@@ -19,7 +19,7 @@ public class TurretGate {
     }
 
     public TurretGate(HardwareMap hardwareMap) {
-        TurretGate = hardwareMap.get(Servo.class, "ShooterHood");
+        TurretGate = hardwareMap.get(Servo.class, "turretGate");
 
         instance = this;
     }

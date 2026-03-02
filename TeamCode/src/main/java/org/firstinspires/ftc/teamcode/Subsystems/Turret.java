@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.PIDFController;
 import org.firstinspires.ftc.teamcode.Util.PIDFParams;
 
@@ -60,7 +61,6 @@ public class Turret {
         for (LLResultTypes.FiducialResult fiducial : fiducials) {
             int id = fiducial.getFiducialId();
 
-
             double time = timer.seconds();
             timer.reset();
 
@@ -69,23 +69,46 @@ public class Turret {
                 latestError = 0;
                 return;
             }
+            if (AllianceManager.isBlueAlliance) {
+                if (id == 20) {
+                    //start PD controller
+                    double error = goalX - fiducial.getTargetXDegrees();
+                    double pTerm = error * kP;
+                    double dTerm = 0;
+                    if (time > 0) {
+                        dTerm = ((error - latestError) / time) * kD;
+                    }
 
-            //start PD controller
-            double error = goalX - fiducial.getTargetXDegrees();
-            double pTerm = error * kP;
-            double dTerm = 0;
-            if (time > 0) {
-                dTerm = ((error - latestError) / time) * kD;
+                    if (Math.abs(error) < toleranceForAngle) {
+                        power = 0;
+                    } else {
+                        power = Range.clip(pTerm + dTerm, -MAX_POWER, MAX_POWER);
+                    }
+
+                    Turret.setPower(power);
+                    latestError = error;
+                }
             }
+            if (AllianceManager.isRedAlliance) {
+                if (id == 24) {
+                    //start PD controller
+                    double error = goalX - fiducial.getTargetXDegrees();
+                    double pTerm = error * kP;
+                    double dTerm = 0;
+                    if (time > 0) {
+                        dTerm = ((error - latestError) / time) * kD;
+                    }
 
-            if (Math.abs(error) < toleranceForAngle) {
-                power = 0;
-            } else {
-                power = Range.clip(pTerm + dTerm, -MAX_POWER, MAX_POWER);
+                    if (Math.abs(error) < toleranceForAngle) {
+                        power = 0;
+                    } else {
+                        power = Range.clip(pTerm + dTerm, -MAX_POWER, MAX_POWER);
+                    }
+
+                    Turret.setPower(power);
+                    latestError = error;
+                }
             }
-
-            Turret.setPower(power);
-            latestError = error;
 
         }
     }
