@@ -45,7 +45,7 @@ public class AutoTest extends LinearOpMode {
                             },
 
                             new SequentialAction(
-                                    Positions.TestDrive.runToExact,
+                                    Positions.TestDrive.runToExact(),
                                     customActions.stopDrive
 
                             )
