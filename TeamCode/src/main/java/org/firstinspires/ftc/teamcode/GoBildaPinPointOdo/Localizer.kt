@@ -11,7 +11,7 @@ class Localizer (hwmap: HardwareMap, private val offset: Poses){
     private val odo: GoBildaPinPointDriver = hwmap.get(GoBildaPinPointDriver::class.java, "odo")
 
     init {
-        odo.setOffsets( -5 * 25.4, -6.5 * 25.4)
+        odo.setOffsets( -5.5 * 25.4, -4.25 * 25.4)
 
         odo.setEncoderResolution(GoBildaPinPointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
 

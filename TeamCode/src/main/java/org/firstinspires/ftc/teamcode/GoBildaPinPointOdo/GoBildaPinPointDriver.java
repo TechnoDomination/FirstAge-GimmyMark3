@@ -81,8 +81,8 @@ public class GoBildaPinPointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
         Y_VELOCITY      (12),
         H_VELOCITY      (13),
         MM_PER_TICK     (14),
-        X_POD_OFFSET    (15),
-        Y_POD_OFFSET    (16),
+        X_POD_OFFSET    (14),
+        Y_POD_OFFSET    (11),
         YAW_SCALAR      (17),
         BULK_READ       (18);
 
