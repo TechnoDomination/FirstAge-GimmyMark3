@@ -13,7 +13,8 @@ import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 public enum Positions {
 
     TestDrive(new Vector2d(0,10),0.0),
-    ShootingPositionsRed(new Vector2d(30, 25), PI*.22);
+    ShootingPositionsRed(new Vector2d(20, 17), PI*.22),
+    RedIntakeTape1Start(new Vector2d(90,15), PI*0.5, 3.0, 0.2);
 
     public double x,y, heading;
     public double driveSpeed;

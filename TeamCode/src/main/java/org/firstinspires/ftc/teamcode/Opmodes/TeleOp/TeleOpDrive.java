@@ -32,7 +32,7 @@ public class TeleOpDrive extends LinearOpMode {
                 intake.state = Intake.State.FORWARD;
                 shooter.state = Shooter.State.CLOSE;
                 shooterHood.state = ShooterHood.State.CLOSE;
-                turretGate.state = TurretGate.State.OPEN;
+                turretGate.state = TurretGate.State.CLOSE;
             }
 
 
@@ -77,9 +77,11 @@ public class TeleOpDrive extends LinearOpMode {
 
             if (gamepad1.right_bumper) {
                 turretGate.state = TurretGate.State.OPEN;
+                intake.state = Intake.State.FEED;
             }
             if (gamepad1.left_bumper) {
                 turretGate.state = TurretGate.State.CLOSE;
+                intake.state = Intake.State.FORWARD;
             }
 
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());

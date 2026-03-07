@@ -30,7 +30,7 @@ public class AutoRedGoal extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(45, 55, PI * 0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(45, 55, PI*0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Intake intake = new Intake(hardwareMap);
@@ -69,9 +69,18 @@ public class AutoRedGoal extends LinearOpMode {
 
                         new SequentialAction(
                                 customActions.shootFrontRed,
+                                customActions.intakeForward,
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsRed.runToExact(),
-                                customActions.stopDrive
+                                customActions.stopDrive,
+                                new SleepAction(driveTime),
+                                Positions.RedIntakeTape1Start.runToExact(),
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                Positions.ShootingPositionsRed.runToExact(),
+                                new SleepAction(1.0)
+
+
                         )
                 )
         );

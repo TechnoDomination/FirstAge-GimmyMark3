@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 
 public class Shooter {
 
@@ -125,7 +127,7 @@ public class Shooter {
                 setVelocityRPM(3000);
                 break;
             case CLOSE:
-                setVelocityRPM(2550);
+                setVelocityRPM(3000);
                 break;
             case TOOCLOSE:
                 setVelocityRPM(2800);

@@ -98,13 +98,12 @@ public class Turret {
                     if (time > 0) {
                         dTerm = ((error - latestError) / time) * kD;
                     }
-
                     if (Math.abs(error) < toleranceForAngle) {
                         power = 0;
                     } else {
-                        power = Range.clip(pTerm + dTerm, -MAX_POWER, MAX_POWER);
+                        power = Range.clip(pTerm + dTerm,
+                                -MAX_POWER, MAX_POWER);
                     }
-
                     Turret.setPower(power);
                     latestError = error;
                 }

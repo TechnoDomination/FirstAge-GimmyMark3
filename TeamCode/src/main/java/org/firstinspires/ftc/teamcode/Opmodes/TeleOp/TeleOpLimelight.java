@@ -24,7 +24,7 @@ public class TeleOpLimelight extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
-        Turret turret = new Turret(hardwareMap);
+        //Turret turret = new Turret(hardwareMap);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
@@ -34,20 +34,20 @@ public class TeleOpLimelight extends LinearOpMode {
                 intake.state = Intake.State.FORWARD;
                 shooter.state = Shooter.State.CLOSE;
                 shooterHood.state = ShooterHood.State.CLOSE;
-                turret.resetTimer();
+               // turret.resetTimer();
             }
 
-            limelightHelper.isReadyToShoot();
-            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
+            //limelightHelper.isReadyToShoot();
+            //shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             //shooter.update();
             intake.update();
             shooterHood.update();
 
-            shooter.setVelocityRPM(shooterPowerDistance);
+           // shooter.setVelocityRPM(shooterPowerDistance);
 
-            turret.update(limelightHelper);
+            //turret.update(limelightHelper);
 
             //Intake
             if (gamepad1.dpad_up) {
@@ -87,6 +87,7 @@ public class TeleOpLimelight extends LinearOpMode {
             telemetry.addData("Right PIDFCoeff : ", shooter.ShooterMotorRight.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
             telemetry.addData("State Shooter:" , shooter.state);
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
+            telemetry.addData("Limelight telemetry: ", limelightHelper.getLimelightTelemetry());
             telemetry.update();
         }
     }

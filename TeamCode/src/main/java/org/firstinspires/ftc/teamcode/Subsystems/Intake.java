@@ -59,10 +59,10 @@ public class Intake {
                 IntakeMotor.setPower(0);
                 break;
             case FORWARD:
-                setVelocityRPM(1000);
+                setVelocityRPM(800);
                 break;
             case FEED:
-                setVelocityRPM(800);
+                setVelocityRPM(2000);
                 break;
             case BACKWARD:
                 setVelocityRPM(-1000);
@@ -86,10 +86,10 @@ public class Intake {
 
 
 
-        /*if ((state == State.FORWARD) && ((IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5 || IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5))){
+        if ((state == State.FORWARD) && ((IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5 || IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5))){
             IntakeMotor.setPower(0);
             IntakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }*/
+        }
 
         if (state == State.OFF && IntakeMotor.getPower() == 0) {
             isTargetReached = true;

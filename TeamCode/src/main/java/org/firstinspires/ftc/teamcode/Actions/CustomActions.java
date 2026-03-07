@@ -53,7 +53,15 @@ public class CustomActions {
             shooter.state = Shooter.State.AUTOCLOSERED;
             shooterHood.state = ShooterHood.State.AUTOCLOSE;
 
-            return !shooter.isVelReached;
+            return !shooter.isTargetReached;
+        }
+    };
+
+    public Action intakeForward = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.state = Intake.State.FORWARD;
+            return !intake.isTargetReached;
         }
     };
 
