@@ -23,9 +23,9 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public double offset = 300.0;
+    public double offset = 100.0;
     public double currVelToCheck = 4000.0;
-    public static final double NEW_P = 52.0;
+    public static final double NEW_P = 55.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
     public static final double NEW_F = 0.000359;
@@ -121,10 +121,10 @@ public class Shooter {
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(3000);
+                setVelocityRPM(3500);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(3000);
+                setVelocityRPM(3500);
                 break;
             case CLOSE:
                 setVelocityRPM(3000);
@@ -145,9 +145,9 @@ public class Shooter {
                 setVelocityRPM(4300);
                 break;
             case AUTOFARRED:
-                setVelocityRPM(5000);
+                setVelocityRPM(4300);
             case AUTOFARBLUE:
-                setVelocityRPM(5000);
+                setVelocityRPM(4300);
             case AUTOFAR:
                 setVelocityRPM(4600);
             case REST:

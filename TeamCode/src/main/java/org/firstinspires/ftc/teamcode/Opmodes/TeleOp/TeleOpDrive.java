@@ -5,13 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Subsystems.DoublePark;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 
-@TeleOp(name = "TeleOpDrive", group = "TeleOp")
+@TeleOp(name = "TeleOpManual", group = "TeleOp")
 public class TeleOpDrive extends LinearOpMode {
 
     @Override
@@ -22,6 +23,7 @@ public class TeleOpDrive extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         TurretGate turretGate = new TurretGate(hardwareMap);
+        DoublePark doublePark = new DoublePark(hardwareMap);
         boolean isStarted = false;
 
         waitForStart();
@@ -33,6 +35,7 @@ public class TeleOpDrive extends LinearOpMode {
                 shooter.state = Shooter.State.CLOSE;
                 shooterHood.state = ShooterHood.State.CLOSE;
                 turretGate.state = TurretGate.State.CLOSE;
+                doublePark.state = DoublePark.State.IN;
             }
 
 
@@ -42,6 +45,7 @@ public class TeleOpDrive extends LinearOpMode {
             intake.update();
             shooterHood.update();
             turretGate.update();
+            doublePark.update();
 
             //Intake
             if (gamepad1.dpad_up) {
@@ -58,30 +62,36 @@ public class TeleOpDrive extends LinearOpMode {
             }
 
             //Shooter
-            if (gamepad1.y) {
+            if (gamepad2.y) {
                 shooter.state = Shooter.State.CLOSE;
                 shooterHood.state = ShooterHood.State.CLOSE;
             }
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 shooter.stopMotor();
                 shooterHood.state = ShooterHood.State.REST;
             }
-            if (gamepad1.x) {
+            if (gamepad2.x) {
                 shooter.state = Shooter.State.FAR;
                 shooterHood.state = ShooterHood.State.FAR;
             }
-            if (gamepad1.b) {
+            if (gamepad2.b) {
                 shooter.state = Shooter.State.MIDDLE;
                 shooterHood.state = ShooterHood.State.MIDDLE;
             }
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 turretGate.state = TurretGate.State.OPEN;
                 intake.state = Intake.State.FEED;
             }
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 turretGate.state = TurretGate.State.CLOSE;
                 intake.state = Intake.State.FORWARD;
+            }
+            if (gamepad2.dpad_up) {
+                doublePark.state = DoublePark.State.PARK;
+            }
+            if (gamepad2.dpad_down) {
+                doublePark.state = DoublePark.State.IN;
             }
 
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());

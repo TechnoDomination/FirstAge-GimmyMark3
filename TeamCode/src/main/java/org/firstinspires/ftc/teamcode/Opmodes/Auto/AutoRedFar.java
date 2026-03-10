@@ -10,10 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
-import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
-//import org.firstinspires.ftc.teamcode.LimelightHelper;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
@@ -22,8 +20,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 
-@Autonomous(name = "AutoRedGoal", group = "Autonomous")
-public class AutoRedGoal extends LinearOpMode {
+@Autonomous(name = "AutoRedFar", group = "Autonomous" )
+public class AutoRedFar extends LinearOpMode {
     Double hopperUpTime = 0.5;
     Double hopperDownTime = 1.0;
     Double driveTime = 1.0;
@@ -31,7 +29,7 @@ public class AutoRedGoal extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(45, 55, PI*0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(12, -52, PI*0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Intake intake = new Intake(hardwareMap);
@@ -70,40 +68,47 @@ public class AutoRedGoal extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootFrontRed,
+                                customActions.shootFarRed,
                                 customActions.intakeForward,
-                                new SleepAction(driveTime),
-                                Positions.ShootingPositionsRed.runToExact,
+                                new SleepAction(3.0),
+                                Positions.NewTurningRed.runToExact,
                                 customActions.stopDrive,
-                                new SleepAction(driveTime),
+                                new SleepAction(1.0),
                                 customActions.turretGateOpen,
                                 new SleepAction(1.0),
                                 customActions.turretGateClose,
                                 new SleepAction(1.0),
-                                Positions.RedIntakeTape1Start.runToExact,
+                                Positions.RedIntakeTape3Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
-                                Positions.RedIntakeTape1End.runToExact,
+                                Positions.RedIntakeTape3End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
-                                Positions.ShootingPositionsRed.runToExact,
-                                new SleepAction(1.0),
-                                customActions.turretGateOpen,
-                                new SleepAction(2.0),
-                                customActions.turretGateClose,
-                                new SleepAction(1.0),
-                                Positions.RedIntakeTape2Start.runToExact,
+                                Positions.NewTurningRed.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
-                                Positions.RedIntakeTape2End.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(1.0),
-                                Positions.ShootingPositionsRed.runToExact,
                                 customActions.turretGateOpen,
                                 new SleepAction(1.0),
                                 customActions.turretGateClose,
+                                new SleepAction(1.0),
+                                Positions.RedIntakeFarTape2Start.runToExact,
                                 customActions.stopDrive,
-                                Positions.ParkPositionsRed.runToExact
+                                new SleepAction(1.0),
+                                Positions.RedIntakeFarTape2End.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                Positions.NewTurningRed.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                customActions.turretGateOpen,
+                                new SleepAction(1.0),
+                                customActions.turretGateClose,
+                                new SleepAction(1.0),
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                Positions.RedIntakeTape3Start.runToExact,
+                                customActions.stopDrive
+
 
 
 
@@ -112,3 +117,6 @@ public class AutoRedGoal extends LinearOpMode {
         );
     }
 }
+
+
+

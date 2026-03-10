@@ -1,21 +1,33 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.LimelightHelper;
+import org.firstinspires.ftc.teamcode.Subsystems.DoublePark;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Subsystems.Turret;
+import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @TeleOp(name = "TeleOpLimelight", group = "TeleOp")
 public class TeleOpLimelight extends LinearOpMode {
 
     boolean isStarted = false;
     public double shooterPowerDistance;
+    private List<Action> runningActions = new ArrayList<>();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,6 +36,11 @@ public class TeleOpLimelight extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        AllianceManager allianceManager = new AllianceManager();
+        TurretGate turretGate = new TurretGate(hardwareMap);
+        DoublePark doublePark = new DoublePark(hardwareMap);
+        CustomActions customActions = new CustomActions(hardwareMap);
+
         //Turret turret = new Turret(hardwareMap);
 
         waitForStart();
@@ -34,18 +51,47 @@ public class TeleOpLimelight extends LinearOpMode {
                 intake.state = Intake.State.FORWARD;
                 shooter.state = Shooter.State.CLOSE;
                 shooterHood.state = ShooterHood.State.CLOSE;
+                turretGate.state = TurretGate.State.CLOSE;
+                doublePark.state = DoublePark.State.IN;
+
                // turret.resetTimer();
             }
 
-            //limelightHelper.isReadyToShoot();
-            //shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
+            if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
+                allianceManager.isRedAlliance = true;
+            }
+
+            limelightHelper.isReadyToShoot();
+            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             //shooter.update();
             intake.update();
             shooterHood.update();
+            turretGate.update();
+            doublePark.update();
 
-           // shooter.setVelocityRPM(shooterPowerDistance);
+
+            //used for far
+            if (limelightHelper.getDistance() < 0) {
+                shooter.setVelocityRPM(4000);
+            }
+            else{
+                shooter.setVelocityRPM(shooterPowerDistance);
+            }
+
+            /*if (limelightHelper.getDistance() > 0 && limelightHelper.getDistance() < 60){
+                shooterHood.state = ShooterHood.State.DOWN;
+                //shooter.state = Shooter.State.CLOSE;
+            } else if (limelightHelper.getDistance() >= 60 && limelightHelper.getDistance() < 80) {
+                shooterHood.state = ShooterHood.State.CLOSE;
+            }else if (limelightHelper.getDistance() >= 80 && limelightHelper.getDistance() < 120) {
+                shooterHood.state = ShooterHood.State.MIDDLE;
+                //shooter.state = Shooter.State.MIDDLE;
+            } else {
+                shooterHood.state = ShooterHood.State.UP;
+                //shooter.state = Shooter.State.FAR;
+            }*/
 
             //turret.update(limelightHelper);
 
@@ -79,6 +125,42 @@ public class TeleOpLimelight extends LinearOpMode {
             if (gamepad1.b) {
                 shooter.state = Shooter.State.MIDDLE;
                 shooterHood.state = ShooterHood.State.MIDDLE;
+            }
+            if (gamepad2.right_bumper) {
+                turretGate.state = TurretGate.State.OPEN;
+                intake.state = Intake.State.FEED;
+            }
+            if (gamepad2.left_bumper) {
+                turretGate.state = TurretGate.State.CLOSE;
+                intake.state = Intake.State.FORWARD;
+            }
+            if (gamepad2.dpad_up) {
+                doublePark.state = DoublePark.State.PARK;
+            }
+            if (gamepad2.dpad_down) {
+                doublePark.state = DoublePark.State.IN;
+            }
+
+            TelemetryPacket packet = new TelemetryPacket();
+
+            // update running actions
+            List<Action> newActions = new ArrayList<>();
+            for (Action action : runningActions) {
+                action.preview(packet.fieldOverlay());
+                if (action.run(packet)) {
+                    newActions.add(action);
+                }
+            }
+            runningActions = newActions;
+
+            if (gamepad2.right_bumper) {
+                runningActions.add(new SequentialAction(
+
+                        customActions.turretGateOpen,
+                        new SleepAction(1.0),
+                        customActions.turretGateClose
+
+                ));
             }
 
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
