@@ -41,7 +41,7 @@ public class TeleOpLimelight extends LinearOpMode {
         DoublePark doublePark = new DoublePark(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
 
-        //Turret turret = new Turret(hardwareMap);
+        Turret turret = new Turret(hardwareMap);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
@@ -66,19 +66,20 @@ public class TeleOpLimelight extends LinearOpMode {
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             //shooter.update();
-            intake.update();
-            shooterHood.update();
-            turretGate.update();
-            doublePark.update();
+           // intake.update();
+            //shooterHood.update();
+            //turretGate.update();
+            //doublePark.update();
 
 
             //used for far
-            if (limelightHelper.getDistance() < 0) {
-                shooter.setVelocityRPM(4000);
+          /*  if (limelightHelper.getDistance() < 0) {
+                shooter.setVelocityRPM(3000);
             }
             else{
-                shooter.setVelocityRPM(shooterPowerDistance);
-            }
+                shooter.setVelocityRPM(3700);
+                //shooter.setVelocityRPM(shooterPowerDistance);
+            }*/
 
             /*if (limelightHelper.getDistance() > 0 && limelightHelper.getDistance() < 60){
                 shooterHood.state = ShooterHood.State.DOWN;
@@ -93,7 +94,7 @@ public class TeleOpLimelight extends LinearOpMode {
                 //shooter.state = Shooter.State.FAR;
             }*/
 
-            //turret.update(limelightHelper);
+            turret.update(limelightHelper);
 
             //Intake
             if (gamepad1.dpad_up) {
@@ -112,19 +113,19 @@ public class TeleOpLimelight extends LinearOpMode {
             //Shooter
             if (gamepad1.y) {
                 shooter.state = Shooter.State.CLOSE;
-                shooterHood.state = ShooterHood.State.CLOSE;
+                //shooterHood.state = ShooterHood.State.CLOSE;
             }
             if (gamepad1.a) {
                 shooter.stopMotor();
-                shooterHood.state = ShooterHood.State.REST;
+                //shooterHood.state = ShooterHood.State.REST;
             }
             if (gamepad1.x) {
                 shooter.state = Shooter.State.FAR;
-                shooterHood.state = ShooterHood.State.FAR;
+                //shooterHood.state = ShooterHood.State.FAR;
             }
             if (gamepad1.b) {
                 shooter.state = Shooter.State.MIDDLE;
-                shooterHood.state = ShooterHood.State.MIDDLE;
+                //shooterHood.state = ShooterHood.State.MIDDLE;
             }
             if (gamepad2.right_bumper) {
                 turretGate.state = TurretGate.State.OPEN;

@@ -23,12 +23,12 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public double offset = 100.0;
+    public double offset = -50.0;
     public double currVelToCheck = 4000.0;
-    public static final double NEW_P = 55.0;
+    public static final double NEW_P = 60;    //75.0
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
-    public static final double NEW_F = 0.000359;
+    public static final double NEW_F = 5;  //0.000380
     PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
 
     public Shooter(HardwareMap hardwareMap) {

@@ -52,8 +52,8 @@ public class AutoBlueGoal extends LinearOpMode {
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
-                            alliance.redAlliance();
-                            alliance.offBlueAlliance();
+                            alliance.offRedAlliance();
+                            alliance.blueAlliance();
                             //SharedPose.runToExactAlways(SharedPose.targetPose);
                             //SharedPose.robotPosition = Poses(Localizer.pose.x)
 

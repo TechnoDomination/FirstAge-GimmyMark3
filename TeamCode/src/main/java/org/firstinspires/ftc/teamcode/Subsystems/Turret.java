@@ -21,13 +21,14 @@ public class Turret {
 
     public DcMotorEx Turret;
     public static Turret instance;
-    private double kP = 0.0001;
-    private double kD = 0.0;
+    private double kP = 1;
+    private double kD = 10;
     private double goalX = 0.0;
     private double latestError = 0.0;
-    private double toleranceForAngle = 0.5;
-    private final double MAX_POWER = 0.7;
+    private double toleranceForAngle = 0;
+    private final double MAX_POWER = 0.4;
     private double power = 0.0;
+    public boolean started = false;
     private double turretStraightPos = 0;
 
     private final ElapsedTime timer = new ElapsedTime();
@@ -56,19 +57,20 @@ public class Turret {
     }
 
     public void update(LimelightHelper limelight) {
-        LLResult result = limelight.getLatestResult();
-        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
-        for (LLResultTypes.FiducialResult fiducial : fiducials) {
-            int id = fiducial.getFiducialId();
 
             double time = timer.seconds();
             timer.reset();
+            started = true;
 
-            if (result == null) {
-                Turret.setPower(0);
-                latestError = 0;
-                return;
-            }
+        LLResult result = limelight.getLatestResult();
+        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+        if (fiducials.isEmpty()) {
+            Turret.setPower(0);
+            latestError = 0;
+            return;
+        }
+        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+            int id = fiducial.getFiducialId();
             if (AllianceManager.isBlueAlliance) {
                 if (id == 20) {
                     //start PD controller
