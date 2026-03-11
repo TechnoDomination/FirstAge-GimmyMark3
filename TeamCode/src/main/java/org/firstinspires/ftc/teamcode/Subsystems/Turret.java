@@ -26,14 +26,14 @@ public class Turret {
     private double goalX = 0.0;
     private double latestError = 0.0;
     private double toleranceForAngle = 0;
-    private final double MAX_POWER = 0.4;
+    private final double MAX_POWER = 0.1;
     private double power = 0.0;
     public boolean started = false;
     private double turretStraightPos = 0;
 
     private final ElapsedTime timer = new ElapsedTime();
 
-    public PIDFController controller = new PIDFController(new PIDFParams(0.0075,0.0,0.0001,0.0));
+    public PIDFController controller = new PIDFController(new PIDFParams(0.001,0.0,0.005,0.0));
 
     public boolean isTargetReached = false;
 

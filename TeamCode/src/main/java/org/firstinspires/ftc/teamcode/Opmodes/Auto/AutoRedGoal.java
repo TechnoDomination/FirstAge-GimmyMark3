@@ -103,7 +103,8 @@ public class AutoRedGoal extends LinearOpMode {
                                 new SleepAction(1.0),
                                 customActions.turretGateClose,
                                 customActions.stopDrive,
-                                Positions.ParkPositionsRed.runToExact
+                                Positions.ParkPositionsRed.runToExact,
+                                customActions.stopDrive
 
 
 

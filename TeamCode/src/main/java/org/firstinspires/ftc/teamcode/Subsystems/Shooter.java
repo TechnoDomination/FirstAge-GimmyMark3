@@ -23,12 +23,12 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public double offset = -50.0;
+    public double offset = -100.0;
     public double currVelToCheck = 4000.0;
-    public static final double NEW_P = 60;    //75.0
+    public static final double NEW_P = 150;    //75.0
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
-    public static final double NEW_F = 5;  //0.000380
+    public static final double NEW_F = 0.000325;  //0.000380
     PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
 
     public Shooter(HardwareMap hardwareMap) {
@@ -49,7 +49,9 @@ public class Shooter {
 
         //setRPMdistance = (0.00725174 * Math.pow(distanceFromGoal, 3)) - (1.78957 * Math.pow(distanceFromGoal, 2)) + (152.94642 * distanceFromGoal) - 892.15026;
         //y=-0.00144221x^{3}+0.577479x^{2}-58.38114x+4656.98818
-            setRPMdistance = (-0.00144221 * Math.pow(distanceFromGoal, 3)) + (0.577479 * Math.pow(distanceFromGoal, 2)) - (58.38114 * distanceFromGoal) + 4656.98818;
+        //setRPMdistance = (-0.00144221 * Math.pow(distanceFromGoal, 3)) + (0.577479 * Math.pow(distanceFromGoal, 2)) - (58.38114 * distanceFromGoal) + 4656.98818;
+
+        setRPMdistance = (-0.0131639 * Math.pow(distanceFromGoal, 3)) + (2.06731 * Math.pow(distanceFromGoal, 2)) - (103.13587 * distanceFromGoal) + 4709.01442;
 
         if (setRPMdistance > 0) {
             return setRPMdistance;
@@ -121,10 +123,10 @@ public class Shooter {
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(3500);
+                setVelocityRPM(3000);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(3500);
+                setVelocityRPM(3000);
                 break;
             case CLOSE:
                 setVelocityRPM(3000);

@@ -66,20 +66,20 @@ public class TeleOpLimelight extends LinearOpMode {
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             //shooter.update();
-           // intake.update();
+            intake.update();
             //shooterHood.update();
-            //turretGate.update();
+            turretGate.update();
             //doublePark.update();
 
 
             //used for far
-          /*  if (limelightHelper.getDistance() < 0) {
-                shooter.setVelocityRPM(3000);
+            if (limelightHelper.getDistance() < 0 ) {
+                shooter.setVelocityRPM(3650);
             }
             else{
-                shooter.setVelocityRPM(3700);
-                //shooter.setVelocityRPM(shooterPowerDistance);
-            }*/
+                //shooter.setVelocityRPM(3200);
+                shooter.setVelocityRPM(shooterPowerDistance);
+            }
 
             /*if (limelightHelper.getDistance() > 0 && limelightHelper.getDistance() < 60){
                 shooterHood.state = ShooterHood.State.DOWN;
@@ -94,7 +94,7 @@ public class TeleOpLimelight extends LinearOpMode {
                 //shooter.state = Shooter.State.FAR;
             }*/
 
-            turret.update(limelightHelper);
+           // turret.update(limelightHelper);
 
             //Intake
             if (gamepad1.dpad_up) {
@@ -136,10 +136,10 @@ public class TeleOpLimelight extends LinearOpMode {
                 intake.state = Intake.State.FORWARD;
             }
             if (gamepad2.dpad_up) {
-                doublePark.state = DoublePark.State.PARK;
+                shooter.offset += 25;
             }
             if (gamepad2.dpad_down) {
-                doublePark.state = DoublePark.State.IN;
+                shooter.offset -= 25;
             }
 
             TelemetryPacket packet = new TelemetryPacket();

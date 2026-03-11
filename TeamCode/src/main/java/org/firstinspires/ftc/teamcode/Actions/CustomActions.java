@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class CustomActions {
     Shooter shooter = Shooter.instance;
     Intake intake = Intake.instance;
-    ShooterHood shooterHood = ShooterHood.instance;
+    //ShooterHood shooterHood = ShooterHood.instance;
     TurretGate turretGate = TurretGate.instance;
     public Drive drive = Drive.instance;
     public static CustomActions instance;
@@ -36,7 +36,7 @@ public class CustomActions {
 
         shooter.update();
         intake.update();
-        shooterHood.update();
+        //shooterHood.update();
         turretGate.update();
 
     }
@@ -54,7 +54,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSERED;
-            shooterHood.state = ShooterHood.State.AUTOCLOSE;
+            //shooterHood.state = ShooterHood.State.AUTOCLOSE;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
 
@@ -66,7 +66,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOFARRED;
-            shooterHood.state = ShooterHood.State.AUTOCLOSE;
+            //shooterHood.state = ShooterHood.State.AUTOCLOSE;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
 
@@ -78,7 +78,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSEBLUE;
-            shooterHood.state = ShooterHood.State.AUTOCLOSE;
+            //shooterHood.state = ShooterHood.State.AUTOCLOSE;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
             return false;
@@ -89,7 +89,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOFARBLUE;
-            shooterHood.state = ShooterHood.State.AUTOCLOSE;
+            //shooterHood.state = ShooterHood.State.AUTOCLOSE;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
 
