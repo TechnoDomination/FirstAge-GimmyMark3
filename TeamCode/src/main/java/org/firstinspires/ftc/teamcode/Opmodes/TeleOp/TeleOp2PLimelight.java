@@ -23,8 +23,8 @@ import org.firstinspires.ftc.teamcode.Util.SmoothGamepad;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "TeleOpLimelight1person", group = "TeleOp")
-public class TeleOpLimelight extends LinearOpMode {
+@TeleOp(name = "TeleOpLimelightDuo", group = "TeleOp")
+public class TeleOp2PLimelight extends LinearOpMode {
 
     boolean isStarted = false;
     public double shooterPowerDistance;
@@ -66,7 +66,7 @@ public class TeleOpLimelight extends LinearOpMode {
             limelightHelper.isReadyToShoot();
             shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
 
-            drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            drive.update(smoothGamepad.smoothGamepad( -gamepad1.left_stick_y), smoothGamepad.smoothGamepad(gamepad1.left_stick_x), smoothGamepad.smoothGamepad(gamepad1.right_stick_x));
             //shooter.update();
             intake.update();
             //shooterHood.update();
@@ -131,18 +131,18 @@ public class TeleOpLimelight extends LinearOpMode {
                 shooter.state = Shooter.State.MIDDLE;
                 //shooterHood.state = ShooterHood.State.MIDDLE;
             }
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 turretGate.state = TurretGate.State.OPEN;
                 intake.state = Intake.State.FEED;
             }
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 turretGate.state = TurretGate.State.CLOSE;
                 intake.state = Intake.State.FORWARD;
             }
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 shooter.offset += 25;
             }
-            if (gamepad1.dpad_down) {
+            if (gamepad2.dpad_down) {
                 shooter.offset -= 25;
             }
 
@@ -158,7 +158,7 @@ public class TeleOpLimelight extends LinearOpMode {
             }
             runningActions = newActions;
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 runningActions.add(new SequentialAction(
 
                         customActions.turretGateOpen,

@@ -123,10 +123,10 @@ public class Shooter {
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(3000);
+                setVelocityRPM(3150);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(3000);
+                setVelocityRPM(3150);
                 break;
             case CLOSE:
                 setVelocityRPM(3000);
@@ -147,9 +147,9 @@ public class Shooter {
                 setVelocityRPM(4300);
                 break;
             case AUTOFARRED:
-                setVelocityRPM(4300);
+                setVelocityRPM(3650);
             case AUTOFARBLUE:
-                setVelocityRPM(4300);
+                setVelocityRPM(3650);
             case AUTOFAR:
                 setVelocityRPM(4600);
             case REST:

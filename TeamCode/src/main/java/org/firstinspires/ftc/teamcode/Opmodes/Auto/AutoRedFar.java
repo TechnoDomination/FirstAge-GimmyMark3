@@ -108,10 +108,6 @@ public class AutoRedFar extends LinearOpMode {
                                 new SleepAction(1.0),
                                 Positions.RedIntakeTape3Start.runToExact,
                                 customActions.stopDrive
-
-
-
-
                         )
                 )
         );

@@ -37,9 +37,7 @@ public class PIDFController {
         pastTime = timer.seconds();
 
         return controlEffect;
-
     }
-
     public double calculate(double error) {
         double dt = timer.seconds() - pastTime;
         integral += (error * dt);
@@ -47,7 +45,6 @@ public class PIDFController {
         prevError = error;
 
         double controlEffect = Math.max(-1.0, Math.min(1.0, (derivative * params.kd + integral * params.kf + error * params.kp)));
-
         pastTime = timer.seconds();
 
         return controlEffect;

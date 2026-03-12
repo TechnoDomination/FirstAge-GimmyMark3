@@ -20,8 +20,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 
-@Autonomous(name = "AutoBlueFar", group = "Autonomous" )
-public class AutoBlueFar extends LinearOpMode {
+@Autonomous(name = "AutoBlueGoalGate", group = "Autonomous")
+public class AutoBlueGoalGate extends LinearOpMode {
     Double hopperUpTime = 0.5;
     Double hopperDownTime = 1.0;
     Double driveTime = 1.0;
@@ -29,7 +29,7 @@ public class AutoBlueFar extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(-12, -52, PI*0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(-45, 55, PI * 0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Intake intake = new Intake(hardwareMap);
@@ -57,6 +57,7 @@ public class AutoBlueFar extends LinearOpMode {
                             //SharedPose.runToExactAlways(SharedPose.targetPose);
                             //SharedPose.robotPosition = Poses(Localizer.pose.x)
 
+
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
                             telemetry.addData("Heading pos", -Localizer.pose.getHeading());
@@ -67,49 +68,53 @@ public class AutoBlueFar extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootFarBlue,
+                                customActions.shootFrontBlue,
                                 //customActions.intakeForward,
+                                new SleepAction(1.0),
+                                Positions.ShootingPositionsBlue.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                customActions.turretGateOpen,
+                                new SleepAction(1.0),
+                                customActions.turretGateClose,
+                                new SleepAction(1.0),
+                                Positions.BlueIntakeTape1Start.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                Positions.BlueIntakeTape1End.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                Positions.BlueIntakeTape1Start.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
+                                Positions.BlueIntakeGate.runToExact,
+                                customActions.stopDrive,
                                 new SleepAction(3.0),
-                                Positions.NewTurningBlue.runToExact,
+                                Positions.ShootingPositionsBlue.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
                                 customActions.turretGateOpen,
                                 new SleepAction(1.0),
                                 customActions.turretGateClose,
                                 new SleepAction(1.0),
-                                Positions.BlueIntakeTape3Start.runToExact,
+                                Positions.BlueIntakeTape2Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
-                                Positions.BlueIntakeTape3End.runToExact,
+                                Positions.BlueIntakeTape2End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
-                                Positions.NewTurningBlue.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(1.0),
-                                customActions.turretGateOpen,
-                                new SleepAction(1.0),
-                                customActions.turretGateClose,
-                                new SleepAction(1.0),
-                                Positions.BlueIntakeFarTape2Start.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(1.0),
-                                Positions.BlueIntakeFarTape2End.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(1.0),
-                                Positions.NewTurningBlue.runToExact,
+                                Positions.ShootingPositionsBlue.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
                                 customActions.turretGateOpen,
                                 new SleepAction(1.0),
                                 customActions.turretGateClose,
                                 new SleepAction(1.0),
-                                Positions.BlueIntakeTape3Start.runToExact,
+                                Positions.ParkPositionsBlue.runToExact,
                                 customActions.stopDrive
+
                         )
                 )
         );
     }
 }
-
-
-

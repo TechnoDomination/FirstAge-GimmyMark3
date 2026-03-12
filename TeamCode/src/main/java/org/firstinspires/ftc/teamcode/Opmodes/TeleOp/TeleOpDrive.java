@@ -38,8 +38,6 @@ public class TeleOpDrive extends LinearOpMode {
                 doublePark.state = DoublePark.State.IN;
             }
 
-
-
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             shooter.update();
             intake.update();
