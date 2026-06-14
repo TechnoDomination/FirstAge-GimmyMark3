@@ -1,34 +1,19 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 //import org.firstinspires.ftc.teamcode.Subsystems.DoublePark;
-import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
-import org.firstinspires.ftc.teamcode.Subsystems.Turret;
 import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
-import org.firstinspires.ftc.teamcode.Util.PIDFController;
-import org.firstinspires.ftc.teamcode.Util.PIDFParams;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@TeleOp(name = "TeleOpManual", group = "TeleOp")
-public class TeleOpDrive extends LinearOpMode {
-
-    private List<Action> runningActions = new ArrayList<>();
-    ElapsedTime timer = new ElapsedTime();
+@TeleOp(name = "TeleOpTestShooter", group = "TeleOp")
+public class TeleOpTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,20 +23,17 @@ public class TeleOpDrive extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         TurretGate turretGate = new TurretGate(hardwareMap);
-        Turret turret = new Turret(hardwareMap);
-        CustomActions customActions = new CustomActions(hardwareMap);
         //DoublePark doublePark = new DoublePark(hardwareMap);
         boolean isStarted = false;
-        PIDFController turretController = new PIDFController(new PIDFParams(0.02510,0.0,0.000));
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
 
             if (!isStarted) {
                 isStarted = true;
-                intake.state = Intake.State.FORWARD;
-                shooter.state = Shooter.State.CLOSE;
-                shooterHood.state = ShooterHood.State.FAR;
+                intake.state = Intake.State.FEED;
+                shooter.state = Shooter.State.MIDDLE;
+                shooterHood.state = ShooterHood.State.MIDDLE;
                 turretGate.state = TurretGate.State.CLOSE;
                 //doublePark.state = DoublePark.State.IN;
             }
@@ -61,18 +43,10 @@ public class TeleOpDrive extends LinearOpMode {
             intake.update();
             shooterHood.update();
             turretGate.update();
-
-            //Keep turret at 0
-            int encoder = turret.Turret.getCurrentPosition();
-
-            double motorPower = turretController.calculate(-encoder);
-            turret.Turret.setPower(motorPower);
-
-
             //doublePark.update();
 
             //Intake
-            /*if (gamepad1.dpad_up) {
+            if (gamepad1.dpad_up) {
                 intake.state = Intake.State.FORWARD;
             }
             if (gamepad1.dpad_down) {
@@ -83,70 +57,39 @@ public class TeleOpDrive extends LinearOpMode {
             }
             if (gamepad1.dpad_left) {
                 intake.state = Intake.State.REST;
-            }*/
+            }
 
             //Shooter
             if (gamepad2.y) {
-                shooter.state = Shooter.State.CLOSE;
-                //shooterHood.state = ShooterHood.State.CLOSE;
+                //shooter.state = Shooter.State.CLOSE;
+                shooterHood.state = ShooterHood.State.CLOSE;
             }
-            /*if (gamepad2.a) {
-                shooter.stopMotor();
+            if (gamepad2.a) {
+                //shooter.stopMotor();
                 shooterHood.state = ShooterHood.State.REST;
-            }*/
+            }
             if (gamepad2.x) {
-                shooter.state = Shooter.State.FAR;
+                //shooter.state = Shooter.State.FAR;
                 shooterHood.state = ShooterHood.State.FAR;
             }
             if (gamepad2.b) {
-                shooter.state = Shooter.State.MIDDLE;
-               // shooterHood.state = ShooterHood.State.MIDDLE;
+               // shooter.state = Shooter.State.MIDDLE;
+                shooterHood.state = ShooterHood.State.MIDDLE;
             }
 
-            //stopper and intake
-            /*if (gamepad2.right_bumper) {
+            if (gamepad2.right_bumper) {
                 turretGate.state = TurretGate.State.OPEN;
                 intake.state = Intake.State.FEED;
-            }*/
+            }
             if (gamepad2.left_bumper) {
                 turretGate.state = TurretGate.State.CLOSE;
                 intake.state = Intake.State.FORWARD;
             }
-            /*if (gamepad2.dpad_up) {
-                doublePark.state = DoublePark.State.PARK;
-            }
-            if (gamepad2.dpad_down) {
-                doublePark.state = DoublePark.State.IN;
-            }*/
-
-            //offset
             if (gamepad2.dpad_up) {
-                shooter.offset += 15;
+                shooter.offset += 10;
             }
             if (gamepad2.dpad_down) {
-                shooter.offset -= 15;
-            }
-
-            TelemetryPacket packet = new TelemetryPacket();
-
-            // update running actions
-            List<Action> newActions = new ArrayList<>();
-            for (Action action : runningActions) {
-                action.preview(packet.fieldOverlay());
-                if (action.run(packet)) {
-                    newActions.add(action);
-                }
-            }
-            runningActions = newActions;
-
-            if (gamepad2.right_bumper) {
-                runningActions.add(new SequentialAction(
-
-                        customActions.turretGateOpen,
-                        new SleepAction(1.0),
-                        customActions.turretGateClose
-
-                ));
+                shooter.offset -= 10;
             }
 
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
@@ -155,7 +98,9 @@ public class TeleOpDrive extends LinearOpMode {
             telemetry.addData("Right PIDFCoeff : ", shooter.ShooterMotorRight.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
             telemetry.addData("State Shooter:" , shooter.state);
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
-            telemetry.addData("Turret Pos: ", turret.Turret.getCurrentPosition());
+            telemetry.addData("TurretGate telemetry: ", turretGate.getTurretGateTelemetry());
+            telemetry.addData("Shooter Hood: ", shooterHood.getShooterHoodTelemetry());
+            telemetry.addData("Voltage: ",hardwareMap.voltageSensor.iterator().next().getVoltage());
             telemetry.update();
         }
     }

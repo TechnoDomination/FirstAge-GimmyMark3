@@ -8,14 +8,17 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
+import org.firstinspires.ftc.teamcode.LimelightHelper;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
+import org.firstinspires.ftc.teamcode.Subsystems.Turret;
 import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
@@ -36,6 +39,9 @@ public class AutoBlueGoal extends LinearOpMode {
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         TurretGate turretGate = new TurretGate(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        Turret turret = new Turret(hardwareMap);
+        LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        ElapsedTime timer = new ElapsedTime();
         //LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         //limelightHelper.setAlliance(true);
         AllianceManager alliance = new AllianceManager();
@@ -44,7 +50,6 @@ public class AutoBlueGoal extends LinearOpMode {
 
 
         //customActions.update();
-
         waitForStart();
 
         Actions.runBlocking(
@@ -54,8 +59,10 @@ public class AutoBlueGoal extends LinearOpMode {
                             customActions.update();
                             alliance.offRedAlliance();
                             alliance.blueAlliance();
+                            turret.update(limelightHelper);
                             //SharedPose.runToExactAlways(SharedPose.targetPose);
                             //SharedPose.robotPosition = Poses(Localizer.pose.x)
+                                shooter.setPIDFCoeff(hardwareMap.voltageSensor.iterator().next().getVoltage());
 
 
                             telemetry.addData("X pos", Localizer.pose.getX());
@@ -97,6 +104,9 @@ public class AutoBlueGoal extends LinearOpMode {
                                 Positions.BlueIntakeTape2End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
+                                Positions.BlueIntakeTape2Start.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(1.0),
                                 Positions.ShootingPositionsBlue.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
@@ -110,5 +120,6 @@ public class AutoBlueGoal extends LinearOpMode {
                         )
                 )
         );
+        limelightHelper.stopLimelight();
     }
 }

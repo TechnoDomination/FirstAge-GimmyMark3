@@ -9,7 +9,7 @@ public class TurretGate {
     public State state = State.REST;
     public static TurretGate instance;
     private final double rest = 0.0;
-    private final double open = 0.4;
+    private final double open = 0.3;
     private final double close = 1;
 
     public enum State {
@@ -48,7 +48,7 @@ public class TurretGate {
         }
     }
 
-    public String getShooterHoodTelemetry() {
+    public String getTurretGateTelemetry() {
         String telemetry = "";
         telemetry = telemetry + "\n Stopper for turret pos = " + TurretGate.getPosition();
         telemetry = telemetry + "\n ";

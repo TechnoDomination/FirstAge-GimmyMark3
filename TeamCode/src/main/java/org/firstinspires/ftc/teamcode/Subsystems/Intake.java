@@ -59,7 +59,7 @@ public class Intake {
                 IntakeMotor.setPower(0);
                 break;
             case FORWARD:
-                setVelocityRPM(800);
+                setVelocityRPM(900);
                 break;
             case FEED:
                 setVelocityRPM(1500);

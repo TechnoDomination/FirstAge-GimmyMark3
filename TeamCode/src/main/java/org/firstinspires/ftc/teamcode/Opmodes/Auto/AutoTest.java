@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 
-@Autonomous(name = "AutoTest", group = "Autonomous")
+@Autonomous(name = "AutoTestRed", group = "Autonomous")
 public class AutoTest extends LinearOpMode {
 
 
@@ -45,7 +45,7 @@ public class AutoTest extends LinearOpMode {
                             },
 
                             new SequentialAction(
-                                    //Positions.TestDrive.runToExact(),
+                                    Positions.Test.runToExact,
                                     customActions.stopDrive
 
                             )

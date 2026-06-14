@@ -21,15 +21,14 @@ public class Turret {
 
     public DcMotorEx Turret;
     public static Turret instance;
-    private double kP = 1;
-    private double kD = 10;
+    private double kP = 0.02510;
+    private double kD = 0.00000;
     private double goalX = 0.0;
     private double latestError = 0.0;
     private double toleranceForAngle = 0;
-    private final double MAX_POWER = 0.1;
+    private final double MAX_POWER = 0.3;
     private double power = 0.0;
     public boolean started = false;
-    private double turretStraightPos = 0;
 
     private final ElapsedTime timer = new ElapsedTime();
 
@@ -37,9 +36,8 @@ public class Turret {
 
     public boolean isTargetReached = false;
 
-    public enum State {
-        FACINGFORWARD
-    }
+
+
 
 
     public Turret(HardwareMap hardwareMap) {

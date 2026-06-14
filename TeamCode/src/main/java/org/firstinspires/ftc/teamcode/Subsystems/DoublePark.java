@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class DoublePark {
+/*public class DoublePark {
     private final Servo DoubleParkLeft;
     //private final Servo DoubleParkRight;
     public boolean isTargetReached = false;
@@ -59,4 +59,4 @@ public class DoublePark {
         telemetry = telemetry + "\n ";
         return telemetry;
     }
-}
+}*/
