@@ -23,7 +23,7 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public double offset = -250.0;
+    public double offset = -280.0;
     public double currVelToCheck = 4000.0;
     public static final double NEW_I = 0.0000003;
     public static final double NEW_D = 0.0;
