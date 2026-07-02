@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 //import org.firstinspires.ftc.teamcode.Subsystems.DoublePark;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -11,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
-
+@Config
 @TeleOp(name = "TeleOpTestShooter", group = "TeleOp")
 public class TeleOpTest extends LinearOpMode {
 
@@ -23,6 +26,8 @@ public class TeleOpTest extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         TurretGate turretGate = new TurretGate(hardwareMap);
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry dashboardTelemetry = dashboard.getTelemetry();
         //DoublePark doublePark = new DoublePark(hardwareMap);
         boolean isStarted = false;
 
@@ -33,7 +38,7 @@ public class TeleOpTest extends LinearOpMode {
                 isStarted = true;
                 intake.state = Intake.State.FEED;
                 shooter.state = Shooter.State.MIDDLE;
-                shooterHood.state = ShooterHood.State.MIDDLE;
+                shooterHood.state = ShooterHood.State.CLOSE;
                 turretGate.state = TurretGate.State.CLOSE;
                 //doublePark.state = DoublePark.State.IN;
             }
@@ -101,6 +106,8 @@ public class TeleOpTest extends LinearOpMode {
             telemetry.addData("TurretGate telemetry: ", turretGate.getTurretGateTelemetry());
             telemetry.addData("Shooter Hood: ", shooterHood.getShooterHoodTelemetry());
             telemetry.addData("Voltage: ",hardwareMap.voltageSensor.iterator().next().getVoltage());
+            dashboardTelemetry.addData("Actull Velocity: ", hardwareMap.voltageSensor.iterator().next().getVoltage());
+            dashboardTelemetry.update();
             telemetry.update();
         }
     }

@@ -29,9 +29,9 @@ public class Shooter {
     public static final double NEW_D = 0.0;
 
 
-    public static final double INITIAL_voltage = 13.41;
-    public static final double INITIAL_rightF = 18;
-    public static final double INITIAL_leftF = 18;
+    public static final double INITIAL_voltage = 13;
+    public static final double INITIAL_rightF = 26.0056;
+    public static final double INITIAL_leftF = 26.0056;
     public static final double CalcVol_leftF = INITIAL_leftF * 12 / INITIAL_voltage;
     public static final double CalcVol_rightF = INITIAL_rightF * 12 / INITIAL_voltage;
     public static
@@ -171,7 +171,7 @@ public class Shooter {
                 setVelocityRPM(3200);
                 break;
             case MIDDLE:
-                setVelocityRPM(3650);
+                setVelocityRPM(2750);
                 break;
             case FAR:
                 setVelocityRPM(4650);

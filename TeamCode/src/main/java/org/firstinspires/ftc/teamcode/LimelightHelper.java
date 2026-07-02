@@ -57,18 +57,18 @@ public class LimelightHelper {
             if (AllianceManager.isBlueAlliance) {
             if (result != null && result.isValid() && id == 20) {
                 double ty = result.getTy();
-                double angleToGoalDegrees = 39.2 + ty;
+                double angleToGoalDegrees = 28.7 + ty;//39.2 - 29.7 for 26
                 double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180);
                 //26 is the goal height - limelight lens height
-                return 23 / Math.tan(angleToGoalRadians);
+                return 26 / Math.tan(angleToGoalRadians); //15
             }
             } else if (AllianceManager.isRedAlliance) {
                 if (result != null && result.isValid() && id == 24) {
                     double ty = result.getTy();
-                    double angleToGoalDegrees = 39.2 + ty;
+                    double angleToGoalDegrees = 28.7 + ty;//39.2
                     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180);
                     //26 is the goal height - limelight lens height
-                    return 23 / Math.tan(angleToGoalRadians);
+                    return 26 / Math.tan(angleToGoalRadians); //15
                 }
             }
         }

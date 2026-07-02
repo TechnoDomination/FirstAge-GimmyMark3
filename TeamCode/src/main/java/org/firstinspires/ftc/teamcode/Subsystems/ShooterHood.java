@@ -8,11 +8,11 @@ public class ShooterHood {
     public State state = State.DOWN;
     public boolean isTargetReached = false;
     public static ShooterHood instance;
-    private final double closePos = 0.75;
+    private final double closePos = 0.7;
     private final double upPos = 0.47;
     private final double closePosAuto = closePos;
     private final double middlePos = 0.6;
-    private final double farPos = 0.47; //0.7
+    private final double farPos = 0.5; //0.7
     private final double downPos = closePos;
     private final double farBlue = 0.47;
     private final double autoCloseNew = 0.2;
