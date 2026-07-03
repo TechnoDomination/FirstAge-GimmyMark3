@@ -23,7 +23,7 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public double offset = -280.0;
+    public double offset = 0.0;//-280.0;
     public double currVelToCheck = 4000.0;
     public static final double NEW_I = 0.0000003;
     public static final double NEW_D = 0.0;
@@ -51,6 +51,27 @@ public class Shooter {
         ShooterMotorLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNewLeft);
         ShooterMotorRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNewRight);
         instance = this;
+    }
+
+    public void setPIDF (double p, double i, double d, double f){
+        ShooterMotorLeft.setVelocityPIDFCoefficients(p,i,d,f);
+        ShooterMotorRight.setVelocityPIDFCoefficients(p,i,d,f);
+    }
+
+    public double getLeftVelocity() {
+        return ShooterMotorLeft.getVelocity();
+    }
+
+    public double getRightVelocity() {
+        return ShooterMotorRight.getVelocity();
+    }
+
+    public double getLeftRPM() {
+        return ShooterMotorLeft.getVelocity() * 60.0 / 28.0;
+    }
+
+    public double getRightRPM() {
+        return ShooterMotorRight.getVelocity() * 60.0 / 28.0;
     }
 
     public double ShooterPowerDistance(double distanceFromGoal) {
@@ -178,12 +199,16 @@ public class Shooter {
                 break;
             case AUTOFARRED:
                 setVelocityRPM(4650);//3650
+                break;
             case AUTOFARBLUE:
                 setVelocityRPM(4650);
+                break;
             case AUTOFAR:
                 setVelocityRPM(4650);
+                break;
             case REST:
                 ShooterMotorLeft.setPower(0);
+                ShooterMotorRight.setPower(0);
                 break;
             case SHOOTMID:
                 setVelocityRPM(3400);
