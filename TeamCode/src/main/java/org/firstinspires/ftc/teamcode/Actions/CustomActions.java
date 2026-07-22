@@ -54,7 +54,7 @@ public class CustomActions {
     public Action shootFrontRed = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOCLOSERED;
+            shooter.state = Shooter.State.BANGBANG_CLOSEAUTO;
             shooterHood.state = ShooterHood.State.FAR;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
@@ -66,7 +66,7 @@ public class CustomActions {
     public Action shootFarRed = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOFARRED;
+            shooter.state = Shooter.State.BANGBANG_FARAUTO;
             shooterHood.state = ShooterHood.State.FAR;//shooterHood.state = ShooterHood.State.AUTOCLOSE;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
@@ -78,7 +78,7 @@ public class CustomActions {
     public Action shootFrontBlue = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOCLOSEBLUE;
+            shooter.state = Shooter.State.BANGBANG_CLOSEAUTO;
             shooterHood.state = ShooterHood.State.FAR;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FEED;
@@ -89,7 +89,7 @@ public class CustomActions {
     public Action shootFarBlue = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOFARBLUE;
+            shooter.state = Shooter.State.BANGBANG_FARAUTO;
             shooterHood.state = ShooterHood.State.FAR;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
@@ -112,6 +112,7 @@ public class CustomActions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             turretGate.state = TurretGate.State.OPEN;
             intake.state = Intake.State.FEED;
+            shooter.ShooterIncreaseSpeed();
             //return !turretGate.isTargetReached;
             return false;
         }

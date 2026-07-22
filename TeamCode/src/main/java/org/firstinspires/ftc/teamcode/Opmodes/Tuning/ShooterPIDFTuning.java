@@ -5,7 +5,9 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
@@ -41,7 +43,7 @@ public class ShooterPIDFTuning extends LinearOpMode {
                 isStarted = true;
                 intake.state = Intake.State.FEED;
                 //shooter.state = Shooter.State.MIDDLE;
-                shooterHood.state = ShooterHood.State.MIDDLE;
+                shooterHood.state = ShooterHood.State.UP;
                 turretGate.state = TurretGate.State.CLOSE;
                 //doublePark.state = DoublePark.State.IN;
             }
@@ -50,7 +52,7 @@ public class ShooterPIDFTuning extends LinearOpMode {
                     kP,
                     kI,
                     kD,
-                    kF);
+                    kF, hardwareMap.voltageSensor.iterator().next().getVoltage());
 
             shooter.setVelocityRPM(TARGET_RPM);
 
@@ -126,6 +128,7 @@ public class ShooterPIDFTuning extends LinearOpMode {
                             .next()
                             .getVoltage());
 
+            telemetry.addData("Intake", intake.getIntakeTelemetry());
             telemetry.update();
         }
     }

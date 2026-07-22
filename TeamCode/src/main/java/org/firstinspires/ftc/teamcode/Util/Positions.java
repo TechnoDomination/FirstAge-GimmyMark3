@@ -51,7 +51,7 @@ public enum Positions {
     BlueIntakeTape2MidEnd(new Vector2d(-55, -12), PI*-0.5),
     ParkPositionsBlue(new Vector2d(-35, 10), PI*-0.5),
     TurningBlue(new Vector2d(0,  70), PI*-0.25),
-    NewTurningBlue(new Vector2d(-8, -40),PI*-0.135),
+    NewTurningBlue(new Vector2d(-8, -40),PI*-0.07),
     NewTurningBlue2(new Vector2d(-10, -50),PI*-0.125),
     EndingBlue(new Vector2d(-20,  60), PI*-0.25),
     NewEndingBlue(new Vector2d(-20,-30), PI*-0.25),

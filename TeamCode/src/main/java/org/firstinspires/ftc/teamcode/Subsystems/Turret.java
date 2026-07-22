@@ -21,23 +21,26 @@ public class Turret {
 
     public DcMotorEx Turret;
     public static Turret instance;
-    private double kP = 0.02510;
-    private double kD = 0.00000;
+    private double kP = 0.01400; //0.009
+    private double kD = 0.000001; //0.0065
     private double goalX = 0.0;
     private double latestError = 0.0;
-    private double toleranceForAngle = 0;
+    private double toleranceForAngle = 5;
     private final double MAX_POWER = 0.3;
     private double power = 0.0;
     public boolean started = false;
 
     private final ElapsedTime timer = new ElapsedTime();
 
-    public PIDFController controller = new PIDFController(new PIDFParams(0.001,0.0,0.005,0.0));
+    //public PIDFController controller = new PIDFController(new PIDFParams(0.01400,0.0,0.0065,0.000001));
 
     public boolean isTargetReached = false;
 
 
-
+    public void setKP(double newKP) { this.kP = newKP; }
+    public double getKP() { return this.kP; }
+    public void setKD(double newKD) { this.kD = newKD; }
+    public double getKD() { return this.kD; }
 
 
     public Turret(HardwareMap hardwareMap) {

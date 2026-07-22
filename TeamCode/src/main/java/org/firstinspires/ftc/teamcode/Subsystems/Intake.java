@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -86,10 +87,11 @@ public class Intake {
 
 
 
-        if ((state == State.FORWARD) && ((IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5 || IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5))){
-            IntakeMotor.setPower(0);
+        /*if ((state == State.FORWARD) && ((IntakeMotor.getCurrent(CurrentUnit.AMPS) > 3 || IntakeMotor.getCurrent(CurrentUnit.AMPS) > 3))){
+            state = State.REST;
+            new SleepAction(0.1);
             IntakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
+        }*/
 
         if (state == State.OFF && IntakeMotor.getPower() == 0) {
             isTargetReached = true;
