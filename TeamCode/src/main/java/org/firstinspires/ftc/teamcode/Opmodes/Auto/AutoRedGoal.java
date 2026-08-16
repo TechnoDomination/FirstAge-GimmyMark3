@@ -64,6 +64,7 @@ public class AutoRedGoal extends LinearOpMode {
                             //SharedPose.runToExactAlways(SharedPose.targetPose);
                             //SharedPose.robotPosition = Poses(Localizer.pose.x)
                             shooter.setPIDFCoeff(hardwareMap.voltageSensor.iterator().next().getVoltage());
+                            turret.TeleOpOrAuto = "auto";
 
 
 
@@ -109,7 +110,8 @@ public class AutoRedGoal extends LinearOpMode {
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
                                 Positions.RedIntakeTape2Start.runToExact,
-                                new SleepAction(1.0),
+                                customActions.stopDrive,
+                                new SleepAction(0.35),
                                 Positions.ShootingPositionsRed.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),

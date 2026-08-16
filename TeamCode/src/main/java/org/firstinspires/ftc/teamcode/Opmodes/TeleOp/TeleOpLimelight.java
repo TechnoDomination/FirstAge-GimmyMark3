@@ -45,6 +45,7 @@ public class TeleOpLimelight extends LinearOpMode {
         CustomActions customActions = new CustomActions(hardwareMap);
         SmoothGamepad smoothGamepad = new SmoothGamepad();
 
+
         Turret turret = new Turret(hardwareMap);
         timer.reset();
         waitForStart();
@@ -57,6 +58,8 @@ public class TeleOpLimelight extends LinearOpMode {
                 shooterHood.state = ShooterHood.State.FAR;
                 turretGate.state = TurretGate.State.CLOSE;
                 //doublePark.state = DoublePark.State.IN;
+                turret.TeleOpOrAuto = "teleOp";
+
 
                 turret.resetTimer();
             }
@@ -156,15 +159,15 @@ public class TeleOpLimelight extends LinearOpMode {
                 intake.state = Intake.State.FORWARD;
             }
             if (gamepad1.dpad_up) {
-                shooter.offset += 15;
+                    shooter.bangbangOffset += 0.05;
             }
             if (gamepad1.dpad_down) {
-                shooter.offset -= 15;
+                shooter.bangbangOffset -= 0.05;
             }
             if (gamepad1.dpad_left) {
                 shooter.offset3Artifact -= 15;
             }
-            if (gamepad1.dpad_down) {
+            if (gamepad1.dpad_right) {
                 shooter.offset3Artifact += 15;
             }
 

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 
-@TeleOp(name = "TeleOpTestShooter", group = "TeleOp")
+@TeleOp(name = "TeleOpTestIntake", group = "TeleOp")
 public class TeleOpTest extends LinearOpMode {
 
     @Override
@@ -20,29 +20,29 @@ public class TeleOpTest extends LinearOpMode {
 
         Drive drive = new Drive(hardwareMap);
         Intake intake = new Intake(hardwareMap);
-        Shooter shooter = new Shooter(hardwareMap);
+       /* Shooter shooter = new Shooter(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         TurretGate turretGate = new TurretGate(hardwareMap);
         //DoublePark doublePark = new DoublePark(hardwareMap);
-        boolean isStarted = false;
+        boolean isStarted = false;*/
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
 
-            if (!isStarted) {
+           /* if (!isStarted) {
                 isStarted = true;
                 intake.state = Intake.State.FEED;
                 shooter.state = Shooter.State.MIDDLE;
                 shooterHood.state = ShooterHood.State.MIDDLE;
                 turretGate.state = TurretGate.State.CLOSE;
                 //doublePark.state = DoublePark.State.IN;
-            }
+            }*/
 
-            drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            shooter.update();
+            drive.update(0.75 * -gamepad1.left_stick_y, 0.75 * gamepad1.left_stick_x, 0.75 * gamepad1.right_stick_x);
+            //shooter.update();
             intake.update();
-            shooterHood.update();
-            turretGate.update();
+            /*shooterHood.update();
+            turretGate.update();*/
             //doublePark.update();
 
             //Intake
@@ -60,7 +60,7 @@ public class TeleOpTest extends LinearOpMode {
             }
 
             //Shooter
-            if (gamepad2.y) {
+           /* if (gamepad2.y) {
                 //shooter.state = Shooter.State.CLOSE;
                 shooterHood.state = ShooterHood.State.CLOSE;
             }
@@ -101,7 +101,7 @@ public class TeleOpTest extends LinearOpMode {
             telemetry.addData("TurretGate telemetry: ", turretGate.getTurretGateTelemetry());
             telemetry.addData("Shooter Hood: ", shooterHood.getShooterHoodTelemetry());
             telemetry.addData("Voltage: ",hardwareMap.voltageSensor.iterator().next().getVoltage());
-            telemetry.update();
+            telemetry.update();*/
         }
     }
 }

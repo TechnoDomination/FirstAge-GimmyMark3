@@ -55,6 +55,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.BANGBANG_CLOSEAUTO;
+            shooter.stopMotor();
             shooterHood.state = ShooterHood.State.FAR;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
@@ -69,6 +70,7 @@ public class CustomActions {
             shooter.state = Shooter.State.BANGBANG_FARAUTO;
             shooterHood.state = ShooterHood.State.FAR;//shooterHood.state = ShooterHood.State.AUTOCLOSE;
             turretGate.state = TurretGate.State.CLOSE;
+            shooter.stopMotor();
             intake.state = Intake.State.FORWARD;
 
             return !shooter.isTargetReached;
@@ -79,6 +81,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.BANGBANG_CLOSEAUTO;
+            shooter.stopMotor();
             shooterHood.state = ShooterHood.State.FAR;
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FEED;
@@ -91,6 +94,7 @@ public class CustomActions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.BANGBANG_FARAUTO;
             shooterHood.state = ShooterHood.State.FAR;
+            shooter.stopMotor();
             turretGate.state = TurretGate.State.CLOSE;
             intake.state = Intake.State.FORWARD;
 

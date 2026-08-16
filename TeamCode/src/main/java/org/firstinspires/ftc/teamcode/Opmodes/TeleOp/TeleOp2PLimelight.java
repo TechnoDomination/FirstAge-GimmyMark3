@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.Util.SmoothGamepad;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "TeleOpLimelightDuo", group = "TeleOp")
+@TeleOp(name = "TeleOpLimelight2person", group = "TeleOp")
 public class TeleOp2PLimelight extends LinearOpMode {
 
     boolean isStarted = false;
@@ -45,6 +45,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
         CustomActions customActions = new CustomActions(hardwareMap);
         SmoothGamepad smoothGamepad = new SmoothGamepad();
 
+
         Turret turret = new Turret(hardwareMap);
         timer.reset();
         waitForStart();
@@ -53,13 +54,17 @@ public class TeleOp2PLimelight extends LinearOpMode {
             if (!isStarted) {
                 isStarted = true;
                 intake.state = Intake.State.FORWARD;
-                //shooter.state = Shooter.State.CLOSE;
+                shooter.state = Shooter.State.BANGBANG_CLOSE;//bangbang
                 shooterHood.state = ShooterHood.State.FAR;
                 turretGate.state = TurretGate.State.CLOSE;
                 //doublePark.state = DoublePark.State.IN;
+                turret.TeleOpOrAuto = "teleOp";
+
 
                 turret.resetTimer();
             }
+
+
             if (timer.time() < 10){
                 shooter.setPIDFCoeff(hardwareMap.voltageSensor.iterator().next().getVoltage());
                 timer.reset();
@@ -70,24 +75,32 @@ public class TeleOp2PLimelight extends LinearOpMode {
             }
 
             limelightHelper.isReadyToShoot();
-            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
+            shooterPowerDistance = 2570;//shooter.ShooterPowerDistance(limelightHelper.getDistance());
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            //shooter.update();
+            shooter.update();//bangbang
             intake.update();
             shooterHood.update();
             turretGate.update();
             //doublePark.update();
 
-
+            //bangbang
             //used for far
             if (limelightHelper.getDistance() < 0 ) {
-                shooter.setVelocityRPM(3950);
+                shooter.state = Shooter.State.BANGBANG_CLOSE;
+                //shooter.setVelocityRPM(3950);
+                //bang bang
+
+            }else if(limelightHelper.getDistance() > 90) {
+                shooter.state = Shooter.State.BANGBANG_FAR;
             }
             else{
                 //shooter.setVelocityRPM(3200);
-                shooter.setVelocityRPM(shooterPowerDistance);
+                //shooter.setVelocityRPM(shooterPowerDistance);
+                shooter.state = Shooter.State.BANGBANG_CLOSE;
             }
+
+
 
             /*if (limelightHelper.getDistance() > 0 && limelightHelper.getDistance() < 20){
                 shooterHood.state = ShooterHood.State.DOWN;
@@ -122,15 +135,15 @@ public class TeleOp2PLimelight extends LinearOpMode {
 
             //Shooter
             if (gamepad1.y) {
-                shooter.state = Shooter.State.CLOSE;
+                shooter.state = Shooter.State.BANGBANG_CLOSE;
                 //shooterHood.state = ShooterHood.State.CLOSE;
             }
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 shooter.stopMotor();
                 //shooterHood.state = ShooterHood.State.REST;
             }
             if (gamepad1.x) {
-                shooter.state = Shooter.State.FAR;
+                shooter.state = Shooter.State.BANGBANG_FAR;
                 //shooterHood.state = ShooterHood.State.FAR;
             }
             if (gamepad1.b) {
@@ -145,12 +158,19 @@ public class TeleOp2PLimelight extends LinearOpMode {
                 turretGate.state = TurretGate.State.CLOSE;
                 intake.state = Intake.State.FORWARD;
             }
-            if (gamepad2.dpad_up) {
-                shooter.offset += 15;
+            if (gamepad1.dpad_up) {
+                shooter.bangbangOffset += 0.05;
             }
-            if (gamepad2.dpad_down) {
-                shooter.offset -= 15;
+            if (gamepad1.dpad_down) {
+                shooter.bangbangOffset -= 0.05;
             }
+            if (gamepad1.dpad_left) {
+                shooter.offset3Artifact -= 15;
+            }
+            if (gamepad1.dpad_right) {
+                shooter.offset3Artifact += 15;
+            }
+
 
             TelemetryPacket packet = new TelemetryPacket();
 
@@ -164,7 +184,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
             }
             runningActions = newActions;
 
-            if (gamepad2.right_bumper) {
+            if (gamepad1.right_bumper) {
                 runningActions.add(new SequentialAction(
 
                         customActions.turretGateOpen,

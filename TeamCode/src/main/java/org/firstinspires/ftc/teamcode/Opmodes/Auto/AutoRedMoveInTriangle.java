@@ -23,16 +23,12 @@ import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 
-@Autonomous(name = "AutoBlueGoal", group = "Autonomous")
-public class AutoBlueGoal extends LinearOpMode {
-    Double hopperUpTime = 0.5;
-    Double hopperDownTime = 1.0;
-    Double driveTime = 1.0;
-
+@Autonomous(name = "AutoInsideRed", group = "Autonomous")
+public class AutoRedMoveInTriangle extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(-45, 55, PI * 0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(45, 55, PI * 0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Intake intake = new Intake(hardwareMap);
@@ -57,12 +53,12 @@ public class AutoBlueGoal extends LinearOpMode {
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
-                            alliance.offRedAlliance();
-                            alliance.blueAlliance();
+                            alliance.redAlliance();
+                            alliance.offBlueAlliance();
                             turret.update(limelightHelper);
                             //SharedPose.runToExactAlways(SharedPose.targetPose);
                             //SharedPose.robotPosition = Poses(Localizer.pose.x)
-                                shooter.setPIDFCoeff(hardwareMap.voltageSensor.iterator().next().getVoltage());
+                            shooter.setPIDFCoeff(hardwareMap.voltageSensor.iterator().next().getVoltage());
                             turret.TeleOpOrAuto = "auto";
 
 
@@ -76,17 +72,17 @@ public class AutoBlueGoal extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootFrontBlue,
+                                customActions.shootFrontRed,
                                 //customActions.intakeForward,
-                                new SleepAction(1.0),
-                                Positions.ShootingPositionsBlue.runToExact,
+                                new SleepAction(4.0),
+                                Positions.ShootingInTriangleRed.runToExact,
                                 customActions.stopDrive,
-                                new SleepAction(1.0),
+                                new SleepAction(2.0),
                                 customActions.turretGateOpen,
                                 new SleepAction(1.0),
                                 customActions.turretGateClose,
-                                new SleepAction(1.0),
-                                Positions.BlueIntakeTape1Start.runToExact,
+                                new SleepAction(2.0),
+                                /*Positions.BlueIntakeTape1Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1.0),
                                 Positions.BlueIntakeTape1End.runToExact,
@@ -116,6 +112,8 @@ public class AutoBlueGoal extends LinearOpMode {
                                 customActions.turretGateClose,
                                 new SleepAction(1.0),
                                 Positions.ParkPositionsBlue.runToExact,
+                                customActions.stopDrive*/
+                                Positions.ParkPositionsRedIn.runToExact,
                                 customActions.stopDrive
 
                         )

@@ -59,6 +59,7 @@ public class AutoBlueFar extends LinearOpMode {
                             alliance.offRedAlliance();
                             alliance.blueAlliance();
                             turret.update(limelightHelper);
+                            turret.TeleOpOrAuto = "auto";
                             //SharedPose.runToExactAlways(SharedPose.targetPose);
                             //SharedPose.robotPosition = Poses(Localizer.pose.x)
 

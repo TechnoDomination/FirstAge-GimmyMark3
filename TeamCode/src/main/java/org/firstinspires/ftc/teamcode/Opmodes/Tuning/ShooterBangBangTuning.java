@@ -16,9 +16,9 @@ import org.firstinspires.ftc.teamcode.Subsystems.TurretGate;
 @TeleOp(name = "Shooter Bang Bang Tuning")
 public class ShooterBangBangTuning extends LinearOpMode {
 
-    public static double TARGET_RPM = 2570;
+    public static double TARGET_RPM = 3200;
 
-    public static double HOLD_POWER = 0.65;
+    public static double HOLD_POWER = 0.75;
 
     public static double RPM_DEADBAND = 25;
 

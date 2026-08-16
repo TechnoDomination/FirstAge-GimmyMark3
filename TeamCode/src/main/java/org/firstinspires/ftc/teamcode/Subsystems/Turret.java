@@ -25,9 +25,10 @@ public class Turret {
     private double kD = 0.000001; //0.0065
     private double goalX = 0.0;
     private double latestError = 0.0;
-    private double toleranceForAngle = 5;
+    private double toleranceForAngle = 0;//5
     private final double MAX_POWER = 0.3;
     private double power = 0.0;
+    public String TeleOpOrAuto = "auto";
     public boolean started = false;
 
     private final ElapsedTime timer = new ElapsedTime();
@@ -72,10 +73,15 @@ public class Turret {
         }
         for (LLResultTypes.FiducialResult fiducial : fiducials) {
             int id = fiducial.getFiducialId();
+            double error;
             if (AllianceManager.isBlueAlliance) {
                 if (id == 20) {
                     //start PD controller
-                    double error = goalX - fiducial.getTargetXDegrees();
+                    if (TeleOpOrAuto.equals("auto")) {
+                        error = goalX + 4; //- fiducial.getTargetXDegrees();
+                    } else {
+                        error = goalX - fiducial.getTargetXDegrees();
+                    }
                     double pTerm = error * kP;
                     double dTerm = 0;
                     if (time > 0) {
@@ -95,7 +101,11 @@ public class Turret {
             if (AllianceManager.isRedAlliance) {
                 if (id == 24) {
                     //start PD controller
-                    double error = goalX - fiducial.getTargetXDegrees();
+                    if (TeleOpOrAuto.equals("auto")) {
+                        error = goalX + 4; //- fiducial.getTargetXDegrees();
+                    } else {
+                        error = goalX - fiducial.getTargetXDegrees();
+                    }
                     double pTerm = error * kP;
                     double dTerm = 0;
                     if (time > 0) {

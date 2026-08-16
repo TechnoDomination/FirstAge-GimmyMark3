@@ -24,6 +24,7 @@ public class Shooter {
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
     public double offset = 0.0;//-280.0;
+    public double bangbangOffset = 0;
     public double offset3Artifact = 380;
     public double currVelToCheck = 4000.0;
     public static final double NEW_I = 0.0000003;
@@ -43,16 +44,16 @@ public class Shooter {
 
     //bang bang control parameters
     public static double CLOSE_RPM = 2657;
-    public static double FAR_RPM = 3200;
+    public static double FAR_RPM = 2900;
     public static double CLOSE_RPMAUTO = 2490;
-    public static double FAR_RPMAUTO = 3700;
+    public static double FAR_RPMAUTO = 2900;
 
-    public static double CLOSE_HOLD_POWER = 0.65;
-    public static double FAR_HOLD_POWER = 0.75;
+    public double CLOSE_HOLD_POWER = 0.65 + bangbangOffset;
+    public double FAR_HOLD_POWER = 0.70 + bangbangOffset;//0.85
     public static double CLOSE_HOLD_POWERAUTO = 0.60;
-    public static double FAR_HOLD_POWERAUTO = 0.9;
+    public static double FAR_HOLD_POWERAUTO = 0.70;
 
-    public static double RPM_DEADBAND = 25;
+    public static double RPM_DEADBAND = 35; //25
 
 
     public Shooter(HardwareMap hardwareMap) {
