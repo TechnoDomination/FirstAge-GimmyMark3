@@ -44,12 +44,12 @@ public class Shooter {
 
     //bang bang control parameters
     public static double CLOSE_RPM = 2657;
-    public static double FAR_RPM = 2900;
+    public static double FAR_RPM = 3200;
     public static double CLOSE_RPMAUTO = 2490;
-    public static double FAR_RPMAUTO = 2900;
+    public static double FAR_RPMAUTO = 3200;
 
     public double CLOSE_HOLD_POWER = 0.65 + bangbangOffset;
-    public double FAR_HOLD_POWER = 0.70 + bangbangOffset;//0.85
+    public double FAR_HOLD_POWER = 0.72 + bangbangOffset;//0.85
     public static double CLOSE_HOLD_POWERAUTO = 0.60;
     public static double FAR_HOLD_POWERAUTO = 0.70;
 
